@@ -1,0 +1,494 @@
+{% comment %}
+Load JS libraries and CSS.
+{% endcomment %}
+
+{% block CSS_BOOTSTRAP %}
+
+{% comment %}
+Bootstrap CSS Toolkit styles
+{% endcomment %}
+<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap.min.css">
+
+{% comment %}
+ Bootstrap styles for responsive website layout, supporting different screen sizes 
+{% endcomment %}
+<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap-responsive.min.css">
+
+{% comment %}
+ Bootstrap CSS fixes for IE6 
+{% endcomment %}
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap-ie6.min.css">
+<![endif]-->
+
+{% endblock %}
+
+
+{% block CSS_BLUEIMP_GALLERY %}
+
+{% comment %}
+ Blueimp Gallery styles 
+{% endcomment %}
+<link 
+    rel="stylesheet"
+    href="{{ STATIC_URL }}demo/blueimp-gallery.min.css"
+>
+
+{% endblock %}
+
+
+
+{% block CSS_JQUERY_FILE_UPLOAD_UI %}
+{% comment %}
+ CSS to style the file input field as button and adjust the Bootstrap progress bars 
+{% endcomment %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui.css">
+
+{% comment %}
+ CSS adjustments for browsers with JavaScript disabled 
+{% endcomment %}
+<noscript><link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui-noscript.css"></noscript>
+{% endblock %}
+
+
+{% block CSS_HTML5_SHIM %}
+
+    {% comment %}
+     Shim to make HTML5 elements usable in older Internet Explorer versions 
+    {% endcomment %}
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+    </script>
+    <![endif]-->
+
+{% endblock %}
+
+
+{% block UPLOAD_FORM %}
+
+{% comment %}
+ The file upload form used as target for the file upload widget 
+{% endcomment %}
+<form 
+    id="fileupload" action="{{ upload_handler_url }}" 
+    method="POST" enctype="multipart/form-data"
+>
+
+    {% csrf_token %}
+
+    {% comment %}
+     Redirect browsers with JavaScript disabled to the origin page 
+    {% endcomment %}
+    <noscript>
+        <input type="hidden" name="redirect" value="{{ STATIC_URL }}demo/jQuery-File-Upload/">
+    </noscript>
+
+
+    {% block UPLOAD_FORM_BUTTON_BAR %}
+    <div class="row fileupload-buttonbar">
+    {% comment %}
+     The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload 
+    {% endcomment %}
+
+        <div class="span7">
+
+            {% comment %}
+             The fileinput-button span is used to style the file input field as button 
+            {% endcomment %}
+
+            {% block UPLOAD_FORM_BUTTON_BAR_ADD %}
+            <span class="btn btn-success fileinput-button">
+                <i class="icon-plus icon-white"></i>
+                <span>Add files...</span>
+
+                        
+                {% block FILE_INPUT %}
+                {% comment %}
+                    The file input for the upload form.
+                {% endcomment %}
+                <input 
+                    type="file" name="files[]" multiple
+
+                    {% if accepted_mime_types %}
+                        accept = '{{ accepted_mime_types|join:"," }}'
+                    {% endif %}
+                >
+                {% endblock %}
+
+            </span>
+            {% endblock %}
+
+            {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
+            <button type="submit" class="btn btn-primary start">
+                <i class="icon-upload icon-white"></i>
+                <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-warning cancel">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel upload</span>
+            </button>
+            <button type="button" class="btn btn-danger delete">
+                <i class="icon-trash icon-white"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" class="toggle">
+            {% endblock %}
+
+        </div>
+
+        {% block UPLOAD_FORM_PROGRESS_BAR %}
+        {% comment %}
+         The global progress information 
+        {% endcomment %}
+        <div class="span5 fileupload-progress fade">
+            {% comment %}
+             The global progress bar 
+            {% endcomment %}
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="bar" style="width:0%;"></div>
+            </div>
+            {% comment %}
+             The extended global progress information 
+            {% endcomment %}
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+        {% endblock %}
+
+    </div>
+    {% endblock %}
+
+    {% comment %}
+     The loading indicator is shown during file processing 
+    {% endcomment %}
+
+    {% block UPLOAD_FORM_LINDICATOR %}
+    <div class="fileupload-loading"></div>
+    <br>
+    {% endblock %}
+
+    {% block UPLOAD_FORM_LISTING %}
+    {% comment %}
+     The table listing the files available for upload/download 
+    {% endcomment %}
+    <table role="presentation" class="table table-striped">
+        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+    </table>
+    {% endblock %}
+
+</form>
+{% endblock %}
+
+
+
+
+{% block MODAL_GALLERY %}
+<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd" tabindex="-1">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn modal-download" target="_blank">
+            <i class="icon-download"></i>
+            <span>Download</span>
+        </a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+            <i class="icon-play icon-white"></i>
+            <span>Slideshow</span>
+        </a>
+        <a class="btn btn-info modal-prev">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Previous</span>
+        </a>
+        <a class="btn btn-primary modal-next">
+            <span>Next</span>
+            <i class="icon-arrow-right icon-white"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% comment %}
+ The template to display files available for upload 
+{% endcomment %}
+
+{% block JS_UPLOAD_TEMPLATE %}
+<script id="template-upload" type="text/x-tmpl">
+{{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
+    <tr class="template-upload fade">
+        <td class="preview"><span class="fade"></span></td>
+        <td class="name"><span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span></td>
+        <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
+
+        {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
+            <td class="error" colspan="2">
+                <span class="label label-important">Error</span> 
+                {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}
+            </td>
+        {{ JQ_OPEN }} } else if (o.files.valid && !i) { {{ JQ_CLOSE }}
+
+            <td>
+                <div 
+                    class="progress progress-success progress-striped active" 
+                    role="progressbar" aria-valuemin="0" aria-valuemax="100" 
+                    aria-valuenow="0">
+                    <div class="bar" style="width:0%;"></div>
+                </div>
+            </td>
+            <td>{{ JQ_OPEN }} if (!o.options.autoUpload) { {{ JQ_CLOSE }}
+                <button class="btn btn-primary start">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
+        {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
+            <td colspan="2"></td>
+        {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+        <td>{{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
+            <button class="btn btn-warning cancel">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel</span>
+            </button>
+        {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
+    </tr>
+{{ JQ_OPEN }} } {{ JQ_CLOSE }}
+</script>
+{% endblock %}
+
+
+{% block JS_DOWNLOAD_TEMPLATE %}
+
+{% comment %}
+ The template to display files available for download 
+{% endcomment %}
+
+<script id="template-download" type="text/x-tmpl">
+{{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
+
+    <tr class="template-download fade">
+
+        {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
+
+            {% block JS_DOWNLOAD_TEMPLATE_ERROR %}
+            <td></td>
+
+            <td class="name"><span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span></td>
+            <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">Error</span>
+
+            {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</td>
+            {% endblock %}
+
+        {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
+
+            {% block JS_DOWNLOAD_TEMPLATE_PREVIEW %}
+            <td class="preview">
+            {{ JQ_OPEN }} if (file.thumbnail_url) { {{ JQ_CLOSE }}
+
+                <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}" 
+                   title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}" 
+                   data-gallery="gallery" download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}">
+                   <img src="{{ JQ_OPEN }}=file.thumbnail_url{{ JQ_CLOSE }}">
+                </a>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
+            {% endblock %}
+
+            {% block JS_DOWNLOAD_TEMPLATE_DOWNLOAD %}
+            <td class="name">
+                <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}" 
+                   title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}" 
+                   data-gallery="{{ JQ_OPEN }}=file.thumbnail_url&&'gallery'{{ JQ_CLOSE }}" 
+                   download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}
+                </a>
+            </td>
+            {% endblock %}
+
+            {% block JS_DOWNLOAD_TEMPLATE_FSIZE %}
+            <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
+            {% endblock %}
+
+            <td colspan="2"></td>
+
+        {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+
+        {% block JS_DOWNLOAD_TEMPLATE_DELETE %}
+        <td>
+            <button class="btn btn-danger delete" data-type="{{ JQ_OPEN }}=file.delete_type{{ JQ_CLOSE }}"
+                    data-url="{{ JQ_OPEN }}=file.delete_url{{ JQ_CLOSE }}"
+                    {{ JQ_OPEN }} if (file.delete_with_credentials) { {{ JQ_CLOSE }}
+                         data-xhr-fields='{"withCredentials":true}'
+                    {{ JQ_OPEN }} } {{ JQ_CLOSE }}>
+                <i class="icon-trash icon-white"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+        </td>
+        {% endblock %}
+
+    </tr>
+{{ JQ_OPEN }} } {{ JQ_CLOSE }}
+</script>
+{% endblock %}
+
+
+{% block JS_JQUERY %}
+{% comment %}
+ jQuery 
+{% endcomment %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block JS_JQUERY_UI_WIDGET %}
+{% comment %}
+ The jQuery UI widget factory, can be omitted if jQuery UI is already included 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/vendor/jquery.ui.widget.js"></script>
+{% endblock %}
+
+{% block JS_TEMPLATES %}
+{% comment %}
+ The Templates plugin is included to render the upload/download listings 
+{% endcomment %}
+<script src="{{ STATIC_URL }}demo/tmpl.min.js"></script>
+{% endblock %}
+
+{% block JS_LOAD_IMAGE %}
+{% comment %}
+ The Load Image plugin is included for the preview images and image resizing functionality 
+{% endcomment %}
+<script src="{{ STATIC_URL }}demo/load-image.min.js"></script>
+{% endblock %}
+
+{% block JS_CANVAS_TO_BLOB %}
+{% comment %}
+ The Canvas to Blob plugin is included for image resizing functionality 
+{% endcomment %}
+<script src="{{ STATIC_URL }}demo/canvas-to-blob.min.js"></script>
+{% endblock %}
+
+{% block JS_BOOTSTRAP %}
+{% comment %}
+ Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo 
+{% endcomment %}
+<script src="{{ STATIC_URL }}demo/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block JS_BLUEIMP_GALLERY %}
+<script src="{{ STATIC_URL }}demo/blueimp-gallery.min.js"></script>
+{% endblock %}
+
+{% block JS_BOOTSTRAP_IFRAME_TRANSPORT %}
+{% comment %}
+ The Iframe Transport is required for browsers without support for XHR file uploads 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/jquery.iframe-transport.js"></script>
+{% endblock %}
+
+{% block JS_JQUERY_FILE_UPLOAD %}
+{% comment %}
+ The basic File Upload plugin 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/jquery.fileupload.js"></script>
+{% endblock %}
+
+{% block JS_JQUERY_FILE_UPLOAD_FP %}
+{% comment %}
+ The File Upload file processing plugin 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-fp.js"></script>
+{% endblock %}
+
+{% block JS_JQUERY_FILEUPLOAD_UI %}
+{% comment %}
+ The File Upload user interface plugin 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-ui.js"></script>
+{% endblock %}
+
+{% comment %}
+ The main application script 
+{% endcomment %}
+
+<script type="text/javascript">
+    $(function() {
+        'use strict';
+
+        {% comment %}
+        Initialize the jQuery File Upload widget.
+
+        Default options are defined by the package, 
+        however users may extend and define their 
+        own options.
+        {% endcomment %}
+
+        {% block JS_INIT %}
+
+        $('#fileupload').fileupload({
+
+            formData: [
+                { name: "csrfmiddlewaretoken", value: "{{ csrf_token }}"}
+            ],
+
+
+            {% block JS_OPTS %}
+            sequentialUploads: true
+            {% endblock %}
+
+        });
+        {% endblock %}
+
+
+        {% block JS_FORM %}
+
+        {% comment %}
+        Load existing files.
+        {% endcomment %}
+
+        $.getJSON(
+            $('#fileupload form').prop('action'), function (files) {
+                var fu = $('#fileupload').data('fileupload');
+                fu._adjustMaxNumberOfFiles(-files.length);
+                fu._renderDownload(files)
+                        .appendTo($('#fileupload .files'))
+                        .fadeIn(function () {
+
+                            {% comment %}
+                            Fix for IE7 and lower:
+                            {% endcomment %}
+
+                            $(this).show();
+                        });
+        });
+        {% endblock %}
+
+        {% block JS_DIALOG %}
+
+
+        {% comment %}
+        Download dialog is opened in an IFRAME
+        in order to prevent aborting current uploads.
+        {% endcomment %}
+
+        $('#fileupload .files a:not([target^=_blank])').live(
+                'click', function (e) {
+                e.preventDefault();
+                $('<iframe style="display:none;"></iframe>')
+                        .prop('src', this.href)
+                        .appendTo('body');
+        });
+        {% endblock %}
+
+    });
+</script>
+
+{% comment %}
+ The XDomainRequest Transport is included for cross-domain file deletion for IE8+ 
+{% endcomment %}
+
+<!--[if gte IE 8]>
+<script src="{{ STATIC_URL }}js/cors/jquery.xdr-transport.js"></script>
+<![endif]-->
