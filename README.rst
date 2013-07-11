@@ -2,9 +2,9 @@
 Django-JFU - A Django Library for jQuery File Upload 
 ----------------------------------------------------
 
-Django-JFU is designed to simplify the tasks involved in integrating jQuery File
-Upload into Django. Django-JFU assumes very little and leaves the model/view
-design up to the user. 
+Django-JFU is designed to simplify the tasks involved in integrating jQuery
+File Upload into Django. Django-JFU assumes very little and leaves the
+model/view design up to the user. 
 
 Other Django - jQuery File Upload implementations are full-featured but
 generally serve more as demonstrations than libraries for existing
@@ -26,9 +26,9 @@ Installation
 Usage
 -----
 
-Django-JFU provides simple customizable template tags and override-able templates that
-do the work of integrating the jQuery File Upload CSS and JavaScipt and the
-HTML implementation found in the jQuery File Upload demo.
+Django-JFU provides simple customizable template tags and override-able
+templates that do the work of integrating the jQuery File Upload CSS and
+JavaScipt and the HTML implementation found in the jQuery File Upload demo.
 
 To place the jQuery File Upload widget in a template, simply insert the
 following within it::
@@ -51,9 +51,10 @@ In your `urls.py` file::
 
 In your `views.py` file::
 
+    import os
     import settings
     from django.views.decorators.http import require_POST
-    from jfu.http import upload_receive, UploadResponse, Django-JFUResponse
+    from jfu.http import upload_receive, UploadResponse, JFUResponse
 
     @require_POST
     def upload( request ):
@@ -65,17 +66,20 @@ In your `views.py` file::
 
         file = upload_receive( request )
 
-        # Assuming file_field is a FileField that saves to the 'media' directory.
         instance = YourUploadModel( file_field = file )
         instance.save()
         
         file_dict = {
             'name' : instance.file_field.file.name,
             'size' : instance.file_field.file.size,
+
+            # The assumption is that file_field is a FileField that saves to
+            # the 'media' directory.
             'url': settings.MEDIA_URL + instance.file.file_field.name,
             'thumbnail_url': settings.MEDIA_URL + instance.file.file_field.name,
-            'delete_url':  reverse('jfu_delete', kwargs = { 'pk': instance.pk } ),
-            "delete_type": "POST",
+
+            'delete_url': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
+            'delete_type': 'POST',
         }
 
         return UploadResponse( request, file_dict )
@@ -85,11 +89,13 @@ In your `views.py` file::
         # An example implementation.
         success = True
         try:
-            YourUploadModel.objects.get( pk = pk ).delete()
+            instance = YourUploadModel.objects.get( pk = pk )
+            os.unlink( instance.file_field.file.path )
+            instance.delete()
         except YourUploadModel.DoesNotExist:
             success = False
 
-        return Django-JFUResponse( request, success )
+        return JFUResponse( request, success )
 
 
 Customization
@@ -138,6 +144,7 @@ HTML Components
 * UPLOAD_FORM_LINDICATOR - The loading indicator shown during file processing.
 * UPLOAD_FORM_PROGRESS_BAR - The global progress information.
 * UPLOAD_FORM_BUTTON_BAR - The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload.
+
     * UPLOAD_FORM_BUTTON_BAR_CONTROL 
     * UPLOAD_FORM_BUTTON_BAR_ADD 
 
@@ -154,11 +161,13 @@ JS Components
 
 * JS_DIALOG 
 * JS_DOWNLOAD_TEMPLATE 
+
     * JS_DOWNLOAD_TEMPLATE_DELETE 
     * JS_DOWNLOAD_TEMPLATE_DOWNLOAD  
     * JS_DOWNLOAD_TEMPLATE_PREVIEW 
     * JS_DOWNLOAD_TEMPLATE_ERROR 
     * JS_DOWNLOAD_TEMPLATE_FSIZE 
+
 * JS_UPLOAD_TEMPLATE 
 * JS_JQUERY 
 * JS_JQUERY_UI_WIDGET
@@ -173,7 +182,8 @@ JS Components
 * JS_JQUERY_FILEUPLOAD_UI 
 
 
-The included JavaScript and CSS can be updated or suppressed by overriding these blocks ::
+The included JavaScript and CSS can be updated or suppressed by overriding
+these blocks ::
 
     # your_fileuploader.html
     {% extends 'jfu/upload_form.html' %}
