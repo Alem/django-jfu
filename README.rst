@@ -140,47 +140,55 @@ HTML Components
 
 * MODAL_GALLERY - The modal gallery
 * UPLOAD_FORM - The file upload form used as target for the file upload widget.
-* UPLOAD_FORM_LISTING - The table listing the files available for upload/download.
-* UPLOAD_FORM_LINDICATOR - The loading indicator shown during file processing.
-* UPLOAD_FORM_PROGRESS_BAR - The global progress information.
-* UPLOAD_FORM_BUTTON_BAR - The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload.
 
-  * UPLOAD_FORM_BUTTON_BAR_CONTROL 
-  * UPLOAD_FORM_BUTTON_BAR_ADD 
+  * UPLOAD_FORM_LISTING - The table listing the files available for upload/download.
+  * UPLOAD_FORM_LINDICATOR - The loading indicator shown during file processing.
+  * UPLOAD_FORM_PROGRESS_BAR - The global progress information.
+  * UPLOAD_FORM_BUTTON_BAR - The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload.
+
+    * UPLOAD_FORM_BUTTON_BAR_CONTROL 
+    * UPLOAD_FORM_BUTTON_BAR_ADD 
 
 CSS Components
 ==============
 
-* CSS_BOOTSTRAP 
-* CSS_BLUEIMP_GALLERY 
-* CSS_JQUERY_FILE_UPLOAD_UI
-* CSS_HTML5_SHIM 
+* CSS
+  * CSS_BOOTSTRAP 
+  * CSS_BOOTSTRAP_IE6
+  * CSS_BLUEIMP_GALLERY 
+  * CSS_JQUERY_FILE_UPLOAD_UI
+  * CSS_HTML5_SHIM 
 
 JS Components
 =============
 
-* JS_DIALOG 
-* JS_DOWNLOAD_TEMPLATE 
-
-  * JS_DOWNLOAD_TEMPLATE_DELETE 
-  * JS_DOWNLOAD_TEMPLATE_DOWNLOAD  
-  * JS_DOWNLOAD_TEMPLATE_PREVIEW 
-  * JS_DOWNLOAD_TEMPLATE_ERROR 
-  * JS_DOWNLOAD_TEMPLATE_FSIZE 
-
-* JS_UPLOAD_TEMPLATE 
-* JS_JQUERY 
-* JS_JQUERY_UI_WIDGET
 * JS_TEMPLATES 
-* JS_LOAD_IMAGE
-* JS_CANVAS_TO_BLOB 
-* JS_BOOTSTRAP 
-* JS_BLUEIMP_GALLERY 
-* JS_BOOTSTRAP_IFRAME_TRANSPORT
-* JS_JQUERY_FILE_UPLOAD
-* JS_JQUERY_FILE_UPLOAD_FP
-* JS_JQUERY_FILEUPLOAD_UI 
 
+  * JS_DOWNLOAD_TEMPLATE 
+
+    * JS_DOWNLOAD_TEMPLATE_DELETE 
+    * JS_DOWNLOAD_TEMPLATE_DOWNLOAD  
+    * JS_DOWNLOAD_TEMPLATE_PREVIEW 
+    * JS_DOWNLOAD_TEMPLATE_ERROR 
+    * JS_DOWNLOAD_TEMPLATE_FSIZE 
+
+  * JS_UPLOAD_TEMPLATE 
+
+* JS_SCRIPTS    
+
+  * JS_DIALOG 
+  * JS_JQUERY 
+  * JS_JQUERY_UI_WIDGET
+  * JS_TEMPLATES_PLUGIN
+  * JS_LOAD_IMAGE
+  * JS_CANVAS_TO_BLOB 
+  * JS_BOOTSTRAP 
+  * JS_BLUEIMP_GALLERY 
+  * JS_BOOTSTRAP_IFRAME_TRANSPORT
+  * JS_JQUERY_FILE_UPLOAD
+  * JS_JQUERY_FILE_UPLOAD_FP
+  * JS_JQUERY_FILEUPLOAD_UI 
+  * JS_XDR_TRANSPORT 
 
 The included JavaScript and CSS can be updated or suppressed by overriding
 these blocks ::

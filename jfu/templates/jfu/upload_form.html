@@ -1,7 +1,4 @@
-{% comment %}
-Load JS libraries and CSS.
-{% endcomment %}
-
+{% block CSS %}
 {% block CSS_BOOTSTRAP %}
 
 {% comment %}
@@ -13,7 +10,9 @@ Bootstrap CSS Toolkit styles
  Bootstrap styles for responsive website layout, supporting different screen sizes 
 {% endcomment %}
 <link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap-responsive.min.css">
+{% endblock %}
 
+{% block CSS_BOOTSTRAP_IE6 %}
 {% comment %}
  Bootstrap CSS fixes for IE6 
 {% endcomment %}
@@ -40,14 +39,18 @@ Bootstrap CSS Toolkit styles
 
 {% block CSS_JQUERY_FILE_UPLOAD_UI %}
 {% comment %}
- CSS to style the file input field as button and adjust the Bootstrap progress bars 
+ CSS to style the file input field as button and adjust the Bootstrap progress bars
 {% endcomment %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui.css">
 
 {% comment %}
  CSS adjustments for browsers with JavaScript disabled 
 {% endcomment %}
-<noscript><link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui-noscript.css"></noscript>
+<noscript>
+    <link rel="stylesheet"
+    href="{{ STATIC_URL }}css/jquery.fileupload-ui-noscript.css"
+    >
+</noscript>
 {% endblock %}
 
 
@@ -62,6 +65,7 @@ Bootstrap CSS Toolkit styles
     </script>
     <![endif]-->
 
+{% endblock %}
 {% endblock %}
 
 
@@ -81,14 +85,15 @@ Bootstrap CSS Toolkit styles
      Redirect browsers with JavaScript disabled to the origin page 
     {% endcomment %}
     <noscript>
-        <input type="hidden" name="redirect" value="{{ STATIC_URL }}demo/jQuery-File-Upload/">
+        <input type="hidden" name="redirect" value="{{ request.path }}">
     </noscript>
 
 
     {% block UPLOAD_FORM_BUTTON_BAR %}
     <div class="row fileupload-buttonbar">
     {% comment %}
-     The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload 
+     The fileupload-buttonbar contains buttons to add/delete files and
+     start/cancel the upload 
     {% endcomment %}
 
         <div class="span7">
@@ -145,7 +150,9 @@ Bootstrap CSS Toolkit styles
             {% comment %}
              The global progress bar 
             {% endcomment %}
-            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div 
+                class="progress progress-success progress-striped active" 
+                role="progressbar" aria-valuemin="0" aria-valuemax="100">
                 <div class="bar" style="width:0%;"></div>
             </div>
             {% comment %}
@@ -172,7 +179,8 @@ Bootstrap CSS Toolkit styles
      The table listing the files available for upload/download 
     {% endcomment %}
     <table role="presentation" class="table table-striped">
-        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        <tbody class="files" data-toggle="modal-gallery" 
+               data-target="#modal-gallery"></tbody>
     </table>
     {% endblock %}
 
@@ -183,7 +191,8 @@ Bootstrap CSS Toolkit styles
 
 
 {% block MODAL_GALLERY %}
-<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd" tabindex="-1">
+<div id="modal-gallery" class="modal modal-gallery hide fade" 
+    data-filter=":odd" tabindex="-1">
     <div class="modal-header">
         <a class="close" data-dismiss="modal">&times;</a>
         <h3 class="modal-title"></h3>
@@ -194,7 +203,8 @@ Bootstrap CSS Toolkit styles
             <i class="icon-download"></i>
             <span>Download</span>
         </a>
-        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+        <a class="btn btn-success modal-play modal-slideshow" 
+            data-slideshow="5000">
             <i class="icon-play icon-white"></i>
             <span>Slideshow</span>
         </a>
@@ -212,6 +222,7 @@ Bootstrap CSS Toolkit styles
 
 
 
+{% block JS_TEMPLATES %}
 {% comment %}
  The template to display files available for upload 
 {% endcomment %}
@@ -333,8 +344,10 @@ Bootstrap CSS Toolkit styles
 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
 </script>
 {% endblock %}
+{% endblock %}
 
 
+{% block JS_SCRIPTS %}
 {% block JS_JQUERY %}
 {% comment %}
  jQuery 
@@ -349,7 +362,7 @@ Bootstrap CSS Toolkit styles
 <script src="{{ STATIC_URL }}js/vendor/jquery.ui.widget.js"></script>
 {% endblock %}
 
-{% block JS_TEMPLATES %}
+{% block JS_TEMPLATES_PLUGIN %}
 {% comment %}
  The Templates plugin is included to render the upload/download listings 
 {% endcomment %}
@@ -485,6 +498,7 @@ Bootstrap CSS Toolkit styles
     });
 </script>
 
+{% block JS_XDR_TRANSPORT %}
 {% comment %}
  The XDomainRequest Transport is included for cross-domain file deletion for IE8+ 
 {% endcomment %}
@@ -492,3 +506,6 @@ Bootstrap CSS Toolkit styles
 <!--[if gte IE 8]>
 <script src="{{ STATIC_URL }}js/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
+{% endblock %}
+
+{% endblock %}
