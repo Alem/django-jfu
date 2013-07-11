@@ -3,8 +3,8 @@ Django-JFU - A Django Library for jQuery File Upload
 ----------------------------------------------------
 
 Django-JFU is designed to simplify the tasks involved in integrating jQuery
-File Upload into Django. Django-JFU assumes very little and leaves the
-model/view design up to the user. 
+File Upload (https://github.com/blueimp/jquery-file-upload) into Django.
+Django-JFU assumes very little and leaves the model/view design up to the user. 
 
 Other Django - jQuery File Upload implementations are full-featured but
 generally serve more as demonstrations than libraries for existing
@@ -19,7 +19,7 @@ Installation
 
 1. `pip install django-jfu`.
 2. Add 'jfu' to `INSTALLED_APPS` in your project `settings.py` file.
-3. Add 'django.core.context_processors.request' to `TEMPLATE_CONTEXT_PROCESSORS` in settings.py as well.
+3. Add 'django.core.context_processors.request' to `TEMPLATE_CONTEXT_PROCESSORS` in settings.py.
 4. Run `python manage.py collectstatic`.
 
 
@@ -201,6 +201,6 @@ these blocks ::
 
 Contribution
 ------------           
-Django-JFU is wholly open source and welcomes contributions of any kind.  Feel
+Django-JFU is wholly open source and welcomes contributions of any kind. Feel
 free to either extend it, report bugs, or provide suggestions for improvements.
 The author can be contacted at alem@cidola.com
