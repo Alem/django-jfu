@@ -19,7 +19,7 @@ import site
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'demo.settings'
 
-SITE_ROOT = os.path.dirname( __file__ )
+SITE_ROOT = os.path.dirname(os.path.dirname( __file__ ))
 
 site.addsitedir( SITE_ROOT + '/venv/local/lib/python2.7/site-packages' )
 sys.path.append( SITE_ROOT )
