@@ -49,6 +49,10 @@
       <div class="hero-unit">
         {% load jfutags %}
         {% jfu %}
+
+        {% block JS_OPTS %}
+        acceptFileTypes: /(\.|\/)(png|gif|jpe?g)$/i,
+        {% endblock %}
       </div>
       
       <div class = 'help' >
