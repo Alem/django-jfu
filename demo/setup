@@ -1,0 +1,8 @@
+#!/bin/bash
+virtualenv venv
+source venv/bin/activate
+pip install django
+pip install django-jfu
+python manage.py syncdb
+python manage.py collectstatic
+echo "Setup Complete."

@@ -1,0 +1,86 @@
+<html>
+<head>
+
+    <title>Django JFU</title>
+    <meta charset="utf-8">
+
+    <style>
+        input { min-height: 1.8em; } 
+    </style> 
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+
+      (function() {
+        var u=(("https:" == document.location.protocol) ? "https" : "http") + "://www.alemcode.com/piwik/";
+        _paq.push(["setTrackerUrl", u+"piwik.php"]);
+        _paq.push(["setSiteId", "9"]);
+        var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+        g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <!-- End Piwik Code -->k
+
+</head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Django-JFU</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="">Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="hero-unit">
+        {% load jfutags %}
+        {% jfu %}
+      </div>
+      
+      <div class = 'help' >
+        <h3>The work involved</h3>
+
+        <div class='row'>
+            <div class='span12'>
+                <h4>Template</h4>
+                <pre>{% verbatim %}{% load jfutags %} {% jfu %} {% endverbatim %}</pre>
+            </div>
+
+            <div class='span12'>
+                <h4>urls.py</h4>
+                <pre>{% with ""|add:project_root|add:"/demo/urls.py" as urls %}{% ssi urls %} {% endwith %}</pre>
+            </div>
+
+            <div class='span12'>
+                <h4>views.py</h4>
+                <pre>{% with ""|add:project_root|add:"/photos/views.py" as urls %}{% ssi urls %} {% endwith %}</pre>
+            </div>
+        </div>
+
+      </div>
+
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+July 17, 2013
+- Updated JS_INIT block to match jQuery File Upload demonstration (as of 17-07-2013) 
+- Removed the JS_FORM block; this will resolve the JavaScript Uncaught TypeError thrown for the deprecated jQuery '.live' method.
+- The file deletion template now accounts for CSRF token expected by Django.

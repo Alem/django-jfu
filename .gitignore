@@ -1,3 +1,5 @@
 *pyc
 demo/static/*
 demo/demo.db
+demo/venv
+demo/media
