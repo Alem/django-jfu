@@ -14,15 +14,18 @@ framework.
 
 """
 import os
+import sys
+import site
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "demo.settings")
+os.environ['DJANGO_SETTINGS_MODULE'] = 'demo.settings'
 
-# This application object is used by any WSGI server configured to use this
-# file. This includes Django's development server, if the WSGI_APPLICATION
-# setting points here.
-from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+SITE_ROOT = os.path.dirname( __file__ )
 
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+site.addsitedir( SITE_ROOT + '/venv/local/lib/python2.7/site-packages' )
+sys.path.append( SITE_ROOT )
+
+activate_env=os.path.expanduser(SITE_ROOT + "/venv/bin/activate_this.py")
+execfile(activate_env, dict(__file__=activate_env))
+
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()

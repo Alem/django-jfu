@@ -17,9 +17,9 @@ this package useful.
 Installation
 ------------
 
-1. `pip install django-jfu`.
-2. Add 'jfu' to `INSTALLED_APPS` in your project `settings.py` file.
-3. Add 'django.core.context_processors.request' and 'django.core.context_processors.static' to `TEMPLATE_CONTEXT_PROCESSORS` in settings.py.
+1. ``pip install django-jfu``.
+2. Add 'jfu' to ``INSTALLED_APPS`` in your project settings.py file.
+3. Add 'django.core.context_processors.request' and 'django.core.context_processors.static' to ``TEMPLATE_CONTEXT_PROCESSORS`` in settings.py.
 4. Run `python manage.py collectstatic`.
 
 
@@ -41,7 +41,7 @@ URL for the view must be named **'jfu_upload'**.
 
 Here is an example implementation:
 
-In your `urls.py` file::
+In your ``urls.py`` file::
 
     ...
     url( r'upload/', views.upload, name = 'jfu_upload' ),
@@ -49,7 +49,7 @@ In your `urls.py` file::
     # You may optionally define a delete url as well
     url( r'^delete/(?P<pk>\d+)$', views.upload_delete, name = 'jfu_delete' ),
 
-In your `views.py` file::
+In your ``views.py`` file::
 
     import os
     from django.conf import settings
@@ -119,7 +119,7 @@ A custom template can extend from the master Django-JFU template
 `jfu/upload_form.html`.  There are several blocks which may be overriden for
 the purpose of customization:
 
-* JS_OPTS - The options supplied to the jQuery File Upload `fileupload` function. 
+* JS_OPTS - The options supplied to the jQuery File Upload ``fileupload`` function. 
 * JS_INIT - The initializing JavaScript
 * JS_FORM - Loads existing files.
 * FILE_INPUT - The file input for the upload form.
