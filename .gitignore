@@ -3,3 +3,5 @@ demo/static/*
 demo/demo.db
 demo/venv
 demo/media
+dist/
+django_jfu.egg-info/
