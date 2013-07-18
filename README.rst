@@ -14,6 +14,10 @@ If you seek a tool to ease the integration of jQuery File Upload into your
 Django application while still having a great degree of freedom, you may find
 this package useful.
 
+Demo_
+
+.. _Demo: http://djfu-demo.cidola.com
+
 Installation
 ------------
 
