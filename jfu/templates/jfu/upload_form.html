@@ -329,6 +329,7 @@ Bootstrap CSS Toolkit styles
         {% block JS_DOWNLOAD_TEMPLATE_DELETE %}
         <td>
             <button class="btn btn-danger delete" data-type="{{ JQ_OPEN }}=file.delete_type{{ JQ_CLOSE }}"
+                    data-data='{ "csrfmiddlewaretoken" : "{{ csrf_token }}" }'
                     data-url="{{ JQ_OPEN }}=file.delete_url{{ JQ_CLOSE }}"
                     {{ JQ_OPEN }} if (file.delete_with_credentials) { {{ JQ_CLOSE }}
                          data-xhr-fields='{"withCredentials":true}'
@@ -461,37 +462,20 @@ Bootstrap CSS Toolkit styles
         Load existing files.
         {% endcomment %}
 
-        $.getJSON(
-            $('#fileupload form').prop('action'), function (files) {
-                var fu = $('#fileupload').data('fileupload');
-                fu._adjustMaxNumberOfFiles(-files.length);
-                fu._renderDownload(files)
-                        .appendTo($('#fileupload .files'))
-                        .fadeIn(function () {
-
-                            {% comment %}
-                            Fix for IE7 and lower:
-                            {% endcomment %}
-
-                            $(this).show();
-                        });
-        });
-        {% endblock %}
-
-        {% block JS_DIALOG %}
-
-
-        {% comment %}
-        Download dialog is opened in an IFRAME
-        in order to prevent aborting current uploads.
-        {% endcomment %}
-
-        $('#fileupload .files a:not([target^=_blank])').live(
-                'click', function (e) {
-                e.preventDefault();
-                $('<iframe style="display:none;"></iframe>')
-                        .prop('src', this.href)
-                        .appendTo('body');
+        $('#fileupload').addClass('fileupload-processing');
+        $.ajax({
+            {% comment %}
+            Uncomment the following to send cross-domain cookies:
+            {% endcomment %}
+            //xhrFields: {withCredentials: true},
+            url: $('#fileupload').fileupload('option', 'url'),
+            dataType: 'json',
+            context: $('#fileupload')[0]
+        }).always(function () {
+            $(this).removeClass('fileupload-processing');
+        }).done(function (result) {
+            $(this).fileupload('option', 'done')
+                .call(this, null, {result: result});
         });
         {% endblock %}
 

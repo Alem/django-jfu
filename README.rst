@@ -19,7 +19,7 @@ Installation
 
 1. `pip install django-jfu`.
 2. Add 'jfu' to `INSTALLED_APPS` in your project `settings.py` file.
-3. Add 'django.core.context_processors.request' to `TEMPLATE_CONTEXT_PROCESSORS` in settings.py.
+3. Add 'django.core.context_processors.request' and 'django.core.context_processors.static' to `TEMPLATE_CONTEXT_PROCESSORS` in settings.py.
 4. Run `python manage.py collectstatic`.
 
 
@@ -52,9 +52,12 @@ In your `urls.py` file::
 In your `views.py` file::
 
     import os
-    import settings
+    from django.conf import settings
+    from django.core.urlresolvers import reverse
     from django.views.decorators.http import require_POST
     from jfu.http import upload_receive, UploadResponse, JFUResponse
+
+    from YourApp.models import YourUploadModel
 
     @require_POST
     def upload( request ):
@@ -62,21 +65,23 @@ In your `views.py` file::
         # The assumption here is that jQuery File Upload 
         # has been configured to send files one at a time.
         # If multiple files can be uploaded simulatenously,
-        # 'file' will be a list of files.
+        # 'file' may be a list of files.
 
         file = upload_receive( request )
 
         instance = YourUploadModel( file_field = file )
         instance.save()
         
+        basename = os.path.basename( instance.file_field.file.name )
         file_dict = {
-            'name' : instance.file_field.file.name,
+            'name' : basename,
             'size' : instance.file_field.file.size,
 
             # The assumption is that file_field is a FileField that saves to
             # the 'media' directory.
-            'url': settings.MEDIA_URL + instance.file.file_field.name,
-            'thumbnail_url': settings.MEDIA_URL + instance.file.file_field.name,
+            'url': settings.MEDIA_URL + basename,
+            'thumbnail_url': settings.MEDIA_URL + basename,
+
 
             'delete_url': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
             'delete_type': 'POST',
@@ -90,7 +95,7 @@ In your `views.py` file::
         success = True
         try:
             instance = YourUploadModel.objects.get( pk = pk )
-            os.unlink( instance.file_field.file.path )
+            os.unlink( instance.file_field.file.name )
             instance.delete()
         except YourUploadModel.DoesNotExist:
             success = False
@@ -110,7 +115,7 @@ view.::
     {% load jfutags %}
     {% jfu 'your_fileuploader.html' 'your_uploader' %}
 
-A custom template can extend from the master jfu template
+A custom template can extend from the master Django-JFU template
 `jfu/upload_form.html`.  There are several blocks which may be overriden for
 the purpose of customization:
 
@@ -139,7 +144,7 @@ HTML Components
 ===============
 
 * MODAL_GALLERY - The modal gallery
-* UPLOAD_FORM - The file upload form used as target for the file upload widget.
+* UPLOAD_FORM   - The file upload form used as target for the file upload widget.
 
   * UPLOAD_FORM_LISTING - The table listing the files available for upload/download.
   * UPLOAD_FORM_LINDICATOR - The loading indicator shown during file processing.
@@ -177,7 +182,6 @@ JS Components
 
 * JS_SCRIPTS    
 
-  * JS_DIALOG 
   * JS_JQUERY 
   * JS_JQUERY_UI_WIDGET
   * JS_TEMPLATES_PLUGIN
@@ -207,9 +211,15 @@ these blocks ::
         {% endcomment %}
     {% endblock %}
 
+Demo
+----
+If you have downloaded from the repository, a simple demo application has been
+included in the 'demo' directory. To test it out, run ::
+
+        ./setup && ./run
 
 Contribution
 ------------           
 Django-JFU is wholly open source and welcomes contributions of any kind. Feel
 free to either extend it, report bugs, or provide suggestions for improvements.
-The author can be contacted at alem@cidola.com
+The author of Django-JFU can be contacted at alem@cidola.com.
