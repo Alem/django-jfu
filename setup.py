@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from os.path import dirname
 import jfu
 
@@ -11,7 +11,7 @@ setup(
     license      = jfu.__licence__,
     keywords     = "django, jquery file upload, multi-upload",
     url          = "http://packages.python.org/jfu",
-    packages     = ['jfu'],
+    packages     = find_packages(),
     include_package_data = True,
     long_description = open('README.rst').read(),
     classifiers  = [
