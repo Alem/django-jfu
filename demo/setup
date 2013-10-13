@@ -2,7 +2,7 @@
 virtualenv venv
 source venv/bin/activate
 pip install django
-pip install django-jfu
+cd .. && python setup.py install && cd -
 mkdir media static
 python manage.py syncdb
 python manage.py collectstatic
