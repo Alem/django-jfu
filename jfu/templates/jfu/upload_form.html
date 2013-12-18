@@ -401,6 +401,13 @@ Bootstrap CSS Toolkit styles
 <script src="{{ STATIC_URL }}js/jquery.iframe-transport.js"></script>
 {% endblock %}
 
+{% block JS_JQUERY_FILE_UPLOAD %}
+{% comment %}
+ The basic File Upload plugin 
+{% endcomment %}
+<script src="{{ STATIC_URL }}js/jquery.fileupload.js"></script>
+{% endblock %}
+
 {% block JS_JQUERY_FILE_UPLOAD_FP %}
 {% comment %}
  The File Upload file processing plugin 
@@ -415,19 +422,12 @@ Bootstrap CSS Toolkit styles
 <script src="{{ STATIC_URL }}js/jquery.fileupload-ui.js"></script>
 {% endblock %}
 
-{% block JS_JQUERY_FILE_UPLOAD %}
-{% comment %}
- The basic File Upload plugin 
-{% endcomment %}
-<script src="{{ STATIC_URL }}js/jquery.fileupload.js"></script>
-{% endblock %}
-
 {% comment %}
  The main application script 
 {% endcomment %}
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $( document ).ready(function() {
         'use strict';
 
         {% comment %}
