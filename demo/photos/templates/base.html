@@ -57,7 +57,13 @@
         <div class='row'>
             <div class='span12'>
                 <h4>Template</h4>
-                <pre>{% verbatim %}{% load jfutags %} {% jfu %} {% endverbatim %}</pre>
+<pre>{% verbatim %}{% load jfutags %} 
+{% jfu 'photo_upload_form.html' %} {% endverbatim %}</pre>
+            </div>
+
+            <div class='span12'>
+                <h4>photo_upload_form.html</h4>
+                <pre>{% with ""|add:project_root|add:"/photos/templates/photo_upload_form.html" as upform %}{% ssi upform %} {% endwith %}</pre>
             </div>
 
             <div class='span12'>
@@ -67,7 +73,7 @@
 
             <div class='span12'>
                 <h4>views.py</h4>
-                <pre>{% with ""|add:project_root|add:"/photos/views.py" as urls %}{% ssi urls %} {% endwith %}</pre>
+                <pre>{% with ""|add:project_root|add:"/photos/views.py" as views %}{% ssi views %} {% endwith %}</pre>
             </div>
         </div>
 

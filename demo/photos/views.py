@@ -1,9 +1,18 @@
 import os
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.views import generic
 from django.views.decorators.http import require_POST
 from jfu.http import upload_receive, UploadResponse, JFUResponse
 from photos.models import Photo
+
+class Home( generic.TemplateView ):
+    template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super( Home, self ).get_context_data( **kwargs )
+        context['accepted_mime_types'] = ['image/*']
+        return context
 
 @require_POST
 def upload( request ):
