@@ -8,14 +8,15 @@ from photos.models import Photo
 @require_POST
 def upload( request ):
     file = upload_receive( request )
+
     instance = Photo( file = file )
     instance.save()
 
-    basename = os.path.basename( instance.file.file.name )
+    basename = os.path.basename( instance.file.path )
     
     file_dict = {
         'name' : basename,
-        'size' : instance.file.file.size,
+        'size' : file.size,
 
         'url': settings.MEDIA_URL + basename,
         'thumbnail_url': settings.MEDIA_URL + basename,
@@ -32,7 +33,7 @@ def upload_delete( request, pk ):
     success = True
     try:
         instance = Photo.objects.get( pk = pk )
-        os.unlink( instance.file.file.name )
+        os.unlink( instance.file.path )
         instance.delete()
     except Photo.DoesNotExist:
         success = False
