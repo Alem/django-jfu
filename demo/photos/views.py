@@ -10,7 +10,6 @@ def upload( request ):
     file = upload_receive( request )
     instance = Photo( file = file )
     instance.save()
-    file.close()
 
     basename = os.path.basename( instance.file.file.name )
     
@@ -25,6 +24,7 @@ def upload( request ):
         'delete_type': 'POST',
     }
 
+    instance.file.close()
     return UploadResponse( request, file_dict )
 
 @require_POST

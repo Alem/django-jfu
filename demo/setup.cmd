@@ -1,9 +1,11 @@
-#!/bin/bash
 virtualenv venv
-source venv/bin/activate
+venv\scripts\activate
 pip install django
-cd .. && python setup.py install && cd -
-mkdir media static
+pushd ..
+python setup.py install
+popd
+mkdir media
+mkdir static
 python manage.py syncdb --noinput
 python manage.py collectstatic --noinput
 echo "Setup Complete."
