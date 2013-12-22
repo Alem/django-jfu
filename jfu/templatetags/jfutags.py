@@ -8,7 +8,8 @@ register = Library()
 def jfu( 
         context, 
         template_name = 'jfu/upload_form.html', 
-        upload_handler_name = 'jfu_upload' 
+        upload_handler_name = 'jfu_upload',
+        *args, **kwargs
     ):
     """
     Displays a form for uploading files using jQuery File Upload.
@@ -20,7 +21,7 @@ def jfu(
     context.update( { 
         'JQ_OPEN'  : '{%',
         'JQ_CLOSE' : '%}',
-        'upload_handler_url': reverse( upload_handler_name ),
+        'upload_handler_url': reverse( upload_handler_name, kwargs=kwargs, args=args ),
     } )
 
     # Use the request context variable, injected
