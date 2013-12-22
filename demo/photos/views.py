@@ -10,8 +10,10 @@ def upload( request ):
     file = upload_receive( request )
     instance = Photo( file = file )
     instance.save()
+    file.close()
 
     basename = os.path.basename( instance.file.file.name )
+    
     file_dict = {
         'name' : basename,
         'size' : instance.file.file.size,

@@ -5,5 +5,5 @@ pip install django
 cd .. && python setup.py install && cd -
 mkdir media static
 python manage.py syncdb
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 echo "Setup Complete."
