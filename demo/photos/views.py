@@ -34,7 +34,6 @@ def upload( request ):
         'delete_type': 'POST',
     }
 
-    instance.file.close()
     return UploadResponse( request, file_dict )
 
 @require_POST

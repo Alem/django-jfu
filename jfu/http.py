@@ -1,5 +1,5 @@
+import json
 from django.http import HttpResponse
-from django.utils import simplejson 
 
 
 def upload_receive( request ):
@@ -18,7 +18,7 @@ class JFUResponse( HttpResponse ):
     """
 
     def __init__( self, request, data = True, *args, **kwargs ):
-        data = simplejson.dumps( data )
+        data = json.dumps( data )
         j    = "application/json"
         mime = j if j in request.META['HTTP_ACCEPT_ENCODING'] else 'text/plain'
         super( JFUResponse, self ).__init__( data, mime, *args, **kwargs )
