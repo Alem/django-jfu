@@ -34,11 +34,15 @@ class UploadResponse( JFUResponse ):
        'name': 'file name', 
        'size': 12345,
        'url' : 'file url', 
-       'thumbnail_url': 'thumbnail url',
-       'delete_url'   : 'delete url',
-       'delete_type'  : 'delete type', 
+       'thumbnailUrl': 'thumbnail url',
+       'deleteUrl'   : 'delete url',
+       'deleteType'  : 'delete type', 
     }
+
+    Refer to the jQuery File Upload documentation for acceptable response data.
+    [https://github.com/blueimp/jQuery-File-Upload/wiki/Setup]
     """
+
     def __init__( self, request, file_dict, *args, **kwargs ):
         files = file_dict if isinstance( file_dict, list ) else [ file_dict ]
         data  = { 'files' : files }

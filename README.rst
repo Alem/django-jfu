@@ -164,8 +164,8 @@ CSS Components
 * CSS
 
   * CSS_BOOTSTRAP 
-  * CSS_BOOTSTRAP_IE6
   * CSS_BLUEIMP_GALLERY 
+  * CSS_JQUERY_FILE_UPLOAD
   * CSS_JQUERY_FILE_UPLOAD_UI
   * CSS_HTML5_SHIM 
 
@@ -196,6 +196,10 @@ JS Components
   * JS_BOOTSTRAP_IFRAME_TRANSPORT
   * JS_JQUERY_FILE_UPLOAD
   * JS_JQUERY_FILE_UPLOAD_FP
+  * JS_JQUERY_FILE_UPLOAD_IMAGE
+  * JS_JQUERY_FILE_UPLOAD_AUDIO
+  * JS_JQUERY_FILE_UPLOAD_VIDEO
+  * JS_JQUERY_FILE_UPLOAD_VALIDATE
   * JS_JQUERY_FILEUPLOAD_UI 
   * JS_XDR_TRANSPORT 
 
@@ -214,6 +218,8 @@ these blocks ::
         This is already included.
         {% endcomment %}
     {% endblock %}
+
+or by replacing the static files themselves.
 
 Demo
 ----

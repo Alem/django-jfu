@@ -28,10 +28,10 @@ def upload( request ):
         'size' : file.size,
 
         'url': settings.MEDIA_URL + basename,
-        'thumbnail_url': settings.MEDIA_URL + basename,
+        'thumbnailUrl': settings.MEDIA_URL + basename,
 
-        'delete_url': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
-        'delete_type': 'POST',
+        'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
+        'deleteType': 'POST',
     }
 
     return UploadResponse( request, file_dict )

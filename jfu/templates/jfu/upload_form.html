@@ -1,30 +1,16 @@
 {% block CSS %}
-{% block CSS_BOOTSTRAP %}
 
+{% block CSS_BOOTSTRAP %}
 {% comment %}
 Bootstrap CSS Toolkit styles
 {% endcomment %}
-<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap.min.css">
-
-{% comment %}
- Bootstrap styles for responsive website layout, supporting different screen sizes 
-{% endcomment %}
-<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap-responsive.min.css">
+<link 
+    rel="stylesheet" 
+    href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+>
 {% endblock %}
-
-{% block CSS_BOOTSTRAP_IE6 %}
-{% comment %}
- Bootstrap CSS fixes for IE6 
-{% endcomment %}
-<!--[if lt IE 7]>
-<link rel="stylesheet" href="{{ STATIC_URL }}demo/bootstrap-ie6.min.css">
-<![endif]-->
-
-{% endblock %}
-
 
 {% block CSS_BLUEIMP_GALLERY %}
-
 {% comment %}
  Blueimp Gallery styles 
 {% endcomment %}
@@ -32,16 +18,20 @@ Bootstrap CSS Toolkit styles
     rel="stylesheet"
     href="{{ STATIC_URL }}demo/blueimp-gallery.min.css"
 >
-
 {% endblock %}
 
+{% block CSS_JQUERY_FILE_UPLOAD %}
+{% comment %}
+ CSS to style the file input field as button and adjust the Bootstrap progress bars
+{% endcomment %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload.css">
+{% endblock %}
 
 {% block CSS_JQUERY_FILE_UPLOAD_UI %}
 {% comment %}
  CSS to style the file input field as button and adjust the Bootstrap progress bars
 {% endcomment %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui.css">
-
 {% comment %}
  CSS adjustments for browsers with JavaScript disabled 
 {% endcomment %}
@@ -95,7 +85,7 @@ Bootstrap CSS Toolkit styles
      start/cancel the upload 
     {% endcomment %}
 
-        <div class="span7">
+        <div class="col-lg-7">
 
             {% comment %}
              The fileinput-button span is used to style the file input field as button 
@@ -103,7 +93,7 @@ Bootstrap CSS Toolkit styles
 
             {% block UPLOAD_FORM_BUTTON_BAR_ADD %}
             <span class="btn btn-success fileinput-button">
-                <i class="icon-plus icon-white"></i>
+                <i class="glyphicon glyphicon-plus"></i>
                 <span>Add files...</span>
 
                         
@@ -125,15 +115,15 @@ Bootstrap CSS Toolkit styles
 
             {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
             <button type="submit" class="btn btn-primary start">
-                <i class="icon-upload icon-white"></i>
+                <i class="glyphicon glyphicon-upload"></i>
                 <span>Start upload</span>
             </button>
             <button type="reset" class="btn btn-warning cancel">
-                <i class="icon-ban-circle icon-white"></i>
+                <i class="glyphicon glyphicon-ban-circle"></i>
                 <span>Cancel upload</span>
             </button>
             <button type="button" class="btn btn-danger delete">
-                <i class="icon-trash icon-white"></i>
+                <i class="glyphicon glyphicon-trash"></i>
                 <span>Delete</span>
             </button>
             <input type="checkbox" class="toggle">
@@ -145,14 +135,17 @@ Bootstrap CSS Toolkit styles
         {% comment %}
          The global progress information 
         {% endcomment %}
-        <div class="span5 fileupload-progress fade">
+        <div class="col-lg-5 fileupload-progress fade">
             {% comment %}
              The global progress bar 
             {% endcomment %}
             <div 
-                class="progress progress-success progress-striped active" 
-                role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="bar" style="width:0%;"></div>
+                class="progress progress-striped active" 
+                role="progressbar" 
+                aria-valuemin="0" aria-valuemax="100"
+            >
+                <div class="progress-bar progress-bar-success" style="width:0%;">
+                </div>
             </div>
             {% comment %}
              The extended global progress information 
@@ -178,8 +171,7 @@ Bootstrap CSS Toolkit styles
      The table listing the files available for upload/download 
     {% endcomment %}
     <table role="presentation" class="table table-striped">
-        <tbody class="files" data-toggle="modal-gallery" 
-               data-target="#modal-gallery"></tbody>
+        <tbody class="files"></tbody>
     </table>
     {% endblock %}
 
@@ -190,32 +182,14 @@ Bootstrap CSS Toolkit styles
 
 
 {% block MODAL_GALLERY %}
-<div id="modal-gallery" class="modal modal-gallery hide fade" 
-    data-filter=":odd" tabindex="-1">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h3 class="modal-title"></h3>
-    </div>
-    <div class="modal-body"><div class="modal-image"></div></div>
-    <div class="modal-footer">
-        <a class="btn modal-download" target="_blank">
-            <i class="icon-download"></i>
-            <span>Download</span>
-        </a>
-        <a class="btn btn-success modal-play modal-slideshow" 
-            data-slideshow="5000">
-            <i class="icon-play icon-white"></i>
-            <span>Slideshow</span>
-        </a>
-        <a class="btn btn-info modal-prev">
-            <i class="icon-arrow-left icon-white"></i>
-            <span>Previous</span>
-        </a>
-        <a class="btn btn-primary modal-next">
-            <span>Next</span>
-            <i class="icon-arrow-right icon-white"></i>
-        </a>
-    </div>
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">&larr;</a>
+    <a class="next">&rarr;</a>
+    <a class="close">x</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
 </div>
 {% endblock %}
 
@@ -230,40 +204,34 @@ Bootstrap CSS Toolkit styles
 <script id="template-upload" type="text/x-tmpl">
 {{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
     <tr class="template-upload fade">
-        <td class="preview"><span class="fade"></span></td>
-        <td class="name"><span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span></td>
-        <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
-
-        {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
-            <td class="error" colspan="2">
-                <span class="label label-important">Error</span> 
-                {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}
-            </td>
-        {{ JQ_OPEN }} } else if (o.files.valid && !i) { {{ JQ_CLOSE }}
-
-            <td>
-                <div 
-                    class="progress progress-success progress-striped active" 
-                    role="progressbar" aria-valuemin="0" aria-valuemax="100" 
-                    aria-valuenow="0">
-                    <div class="bar" style="width:0%;"></div>
-                </div>
-            </td>
-            <td>{{ JQ_OPEN }} if (!o.options.autoUpload) { {{ JQ_CLOSE }}
-                <button class="btn btn-primary start">
-                    <i class="icon-upload icon-white"></i>
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar"
+                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+            </div>
+        </td>
+        <td>
+            {{ JQ_OPEN }} if (!i && !o.options.autoUpload) { {{ JQ_CLOSE }}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
                     <span>Start</span>
                 </button>
-            {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
-        {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
-            <td colspan="2"></td>
-        {{ JQ_OPEN }} } {{ JQ_CLOSE }}
-        <td>{{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
-            <button class="btn btn-warning cancel">
-                <i class="icon-ban-circle icon-white"></i>
-                <span>Cancel</span>
-            </button>
-        {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            {{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+        </td>
     </tr>
 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
 </script>
@@ -271,75 +239,64 @@ Bootstrap CSS Toolkit styles
 
 
 {% block JS_DOWNLOAD_TEMPLATE %}
-
 {% comment %}
  The template to display files available for download 
 {% endcomment %}
 
 <script id="template-download" type="text/x-tmpl">
 {{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
-
     <tr class="template-download fade">
-
-        {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
-
-            {% block JS_DOWNLOAD_TEMPLATE_ERROR %}
-            <td></td>
-
-            <td class="name"><span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span></td>
-            <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">Error</span>
-
-            {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</td>
-            {% endblock %}
-
-        {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
-
-            {% block JS_DOWNLOAD_TEMPLATE_PREVIEW %}
-            <td class="preview">
-            {{ JQ_OPEN }} if (file.thumbnail_url) { {{ JQ_CLOSE }}
-
-                <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}" 
-                   title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}" 
-                   data-gallery="gallery" download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}">
-                   <img src="{{ JQ_OPEN }}=file.thumbnail_url{{ JQ_CLOSE }}">
-                </a>
-            {{ JQ_OPEN }} } {{ JQ_CLOSE }}</td>
-            {% endblock %}
-
-            {% block JS_DOWNLOAD_TEMPLATE_DOWNLOAD %}
-            <td class="name">
-                <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}" 
-                   title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}" 
-                   data-gallery="{{ JQ_OPEN }}=file.thumbnail_url&&'gallery'{{ JQ_CLOSE }}" 
-                   download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}
-                </a>
-            </td>
-            {% endblock %}
-
-            {% block JS_DOWNLOAD_TEMPLATE_FSIZE %}
-            <td class="size"><span>{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span></td>
-            {% endblock %}
-
-            <td colspan="2"></td>
-
-        {{ JQ_OPEN }} } {{ JQ_CLOSE }}
-
-        {% block JS_DOWNLOAD_TEMPLATE_DELETE %}
         <td>
-            <button class="btn btn-danger delete" data-type="{{ JQ_OPEN }}=file.delete_type{{ JQ_CLOSE }}"
-                    data-data='{ "csrfmiddlewaretoken" : "{{ csrf_token }}" }'
-                    data-url="{{ JQ_OPEN }}=file.delete_url{{ JQ_CLOSE }}"
-                    {{ JQ_OPEN }} if (file.delete_with_credentials) { {{ JQ_CLOSE }}
-                         data-xhr-fields='{"withCredentials":true}'
-                    {{ JQ_OPEN }} } {{ JQ_CLOSE }}>
-                <i class="icon-trash icon-white"></i>
-                <span>Delete</span>
-            </button>
-            <input type="checkbox" name="delete" value="1" class="toggle">
+            <span class="preview">
+                {{ JQ_OPEN }} if (file.thumbnailUrl) { {{ JQ_CLOSE }}
+                    <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}"
+                     title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}"
+                     download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}"
+                     data-gallery><img src="{{ JQ_OPEN }}=file.thumbnailUrl{{ JQ_CLOSE }}"
+                    ></a>
+                {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            </span>
         </td>
-        {% endblock %}
-
+        <td>
+            <p class="name">
+                {{ JQ_OPEN }} if (file.url) { {{ JQ_CLOSE }}
+                    <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}"
+                     title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}"
+                     download="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}"
+                     {{ JQ_OPEN }}=file.thumbnailUrl?'data-gallery':''{{ JQ_CLOSE }}>
+                     {{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}
+                    </a>
+                {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
+                    <span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span>
+                {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            </p>
+            {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
+                <div><span class="label label-danger">Error</span> {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</div>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+        </td>
+        <td>
+            <span class="size">{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span>
+        </td>
+        <td>
+            {{ JQ_OPEN }} if (file.deleteUrl) { {{ JQ_CLOSE }}
+                <button class="btn btn-danger delete" 
+                        data-type="{{ JQ_OPEN }}=file.deleteType{{ JQ_CLOSE }}"
+                        data-data='{ "csrfmiddlewaretoken" : "{{ csrf_token }}" }'
+                        data-url="{{ JQ_OPEN }}=file.deleteUrl{{ JQ_CLOSE }}"
+                        {{ JQ_OPEN }} if (file.deleteWithCredentials) { %} 
+                            data-xhr-fields='{"withCredentials":true}'{% } 
+                        {{ JQ_CLOSE }}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+        </td>
     </tr>
 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
 </script>
@@ -352,7 +309,7 @@ Bootstrap CSS Toolkit styles
 {% comment %}
  jQuery 
 {% endcomment %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 {% endblock %}
 
 {% block JS_JQUERY_UI_WIDGET %}
@@ -384,14 +341,11 @@ Bootstrap CSS Toolkit styles
 {% endblock %}
 
 {% block JS_BOOTSTRAP %}
-{% comment %}
- Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo 
-{% endcomment %}
-<script src="{{ STATIC_URL }}demo/bootstrap.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block JS_BLUEIMP_GALLERY %}
-<script src="{{ STATIC_URL }}demo/blueimp-gallery.min.js"></script>
+<script src="{{ STATIC_URL }}demo/jquery.blueimp-gallery.min.js"></script>
 {% endblock %}
 
 {% block JS_BOOTSTRAP_IFRAME_TRANSPORT %}
@@ -412,8 +366,41 @@ Bootstrap CSS Toolkit styles
 {% comment %}
  The File Upload file processing plugin 
 {% endcomment %}
-<script src="{{ STATIC_URL }}js/jquery.fileupload-fp.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.fileupload-process.js"></script>
 {% endblock %}
+
+
+{% block JS_JQUERY_FILE_UPLOAD_IMAGE %}
+{%comment%}
+The File Upload image preview & resize plugin
+{%endcomment%}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-image.js"></script>
+{% endblock %}
+
+
+{% block JS_JQUERY_FILE_UPLOAD_AUDIO %}
+{%comment%}
+The File Upload audio preview plugin
+{%endcomment%}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-audio.js"></script>
+{% endblock %}
+
+
+{% block JS_JQUERY_FILE_UPLOAD_VIDEO %}
+{%comment%}
+The File Upload video preview plugin
+{%endcomment%}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-video.js"></script>
+{% endblock %}
+
+
+{% block JS_JQUERY_FILE_UPLOAD_VALIDATE %}
+{%comment%}
+The File Upload validation plugin
+{%endcomment%}
+<script src="{{ STATIC_URL }}js/jquery.fileupload-validate.js"></script>
+{% endblock %}
+
 
 {% block JS_JQUERY_FILEUPLOAD_UI %}
 {% comment %}
@@ -427,7 +414,7 @@ Bootstrap CSS Toolkit styles
 {% endcomment %}
 
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $( function() {
         'use strict';
 
         {% comment %}
@@ -474,7 +461,7 @@ Bootstrap CSS Toolkit styles
             $(this).removeClass('fileupload-processing');
         }).done(function (result) {
             $(this).fileupload('option', 'done')
-                .call(this, null, {result: result});
+                .call(this, $.Event('done'), {result: result});
         });
         {% endblock %}
 

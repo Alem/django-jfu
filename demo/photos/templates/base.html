@@ -5,7 +5,9 @@
     <meta charset="utf-8">
 
     <style>
-        input { min-height: 1.8em; } 
+        body {
+          padding-top: 100px;
+        }
     </style> 
 
     <!-- Piwik -->
@@ -28,18 +30,11 @@
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Django-JFU</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="">Home</a></li>
-            </ul>
-          </div>
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Django-JFU</a>
         </div>
       </div>
     </div>
@@ -55,23 +50,23 @@
         <h3>The work involved</h3>
 
         <div class='row'>
-            <div class='span12'>
+            <div>
                 <h4>Template</h4>
 <pre>{% verbatim %}{% load jfutags %} 
 {% jfu 'photo_upload_form.html' %} {% endverbatim %}</pre>
             </div>
 
-            <div class='span12'>
+            <div>
                 <h4>photo_upload_form.html</h4>
                 <pre>{% with ""|add:project_root|add:"/photos/templates/photo_upload_form.html" as upform %}{% ssi upform %} {% endwith %}</pre>
             </div>
 
-            <div class='span12'>
+            <div>
                 <h4>urls.py</h4>
                 <pre>{% with ""|add:project_root|add:"/demo/urls.py" as urls %}{% ssi urls %} {% endwith %}</pre>
             </div>
 
-            <div class='span12'>
+            <div>
                 <h4>views.py</h4>
                 <pre>{% with ""|add:project_root|add:"/photos/views.py" as views %}{% ssi views %} {% endwith %}</pre>
             </div>

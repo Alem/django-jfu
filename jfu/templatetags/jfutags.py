@@ -30,7 +30,7 @@ def jfu(
     } )
 
     # Use the request context variable, injected
-    # by django.core.context_processors.request
+    # by django.core.context_processors.request,
     # to generate the CSRF token.
     context.update( csrf( context.get('request') ) )
 
