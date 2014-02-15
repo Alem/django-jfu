@@ -54,58 +54,54 @@ In your ``urls.py`` file::
     url( r'^delete/(?P<pk>\d+)$', views.upload_delete, name = 'jfu_delete' ),
 
 In your ``views.py`` file::
-
+    
     import os
     from django.conf import settings
     from django.core.urlresolvers import reverse
+    from django.views import generic
     from django.views.decorators.http import require_POST
     from jfu.http import upload_receive, UploadResponse, JFUResponse
 
-    from YourApp.models import YourUploadModel
+    from YOURAPP.models import YOURMODEL
 
     @require_POST
     def upload( request ):
 
-        # The assumption here is that jQuery File Upload 
+        # The assumption here is that jQuery File Upload
         # has been configured to send files one at a time.
         # If multiple files can be uploaded simulatenously,
         # 'file' may be a list of files.
-
         file = upload_receive( request )
 
-        instance = YourUploadModel( file_field = file )
+        instance = YOURMODEL( file = file )
         instance.save()
+
+        basename = os.path.basename( instance.file.path )
         
-        basename = os.path.basename( instance.file_field.file.name )
         file_dict = {
             'name' : basename,
-            'size' : instance.file_field.file.size,
+            'size' : file.size,
 
-            # The assumption is that file_field is a FileField that saves to
-            # the 'media' directory.
             'url': settings.MEDIA_URL + basename,
-            'thumbnail_url': settings.MEDIA_URL + basename,
+            'thumbnailUrl': settings.MEDIA_URL + basename,
 
-
-            'delete_url': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
-            'delete_type': 'POST',
+            'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
+            'deleteType': 'POST',
         }
 
         return UploadResponse( request, file_dict )
 
     @require_POST
     def upload_delete( request, pk ):
-        # An example implementation.
         success = True
         try:
-            instance = YourUploadModel.objects.get( pk = pk )
-            os.unlink( instance.file_field.file.name )
+            instance = YOURMODEL.objects.get( pk = pk )
+            os.unlink( instance.file.path )
             instance.delete()
-        except YourUploadModel.DoesNotExist:
+        except YOURMODEL.DoesNotExist:
             success = False
 
         return JFUResponse( request, success )
-
 
 Customization
 -------------
