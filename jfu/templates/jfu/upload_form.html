@@ -55,6 +55,10 @@ Bootstrap CSS Toolkit styles
     <![endif]-->
 
 {% endblock %}
+
+{% block CSS_EXTRA %}
+{% endblock %}
+
 {% endblock %}
 
 
@@ -97,6 +101,17 @@ Bootstrap CSS Toolkit styles
                 <span>Add files...</span>
 
                         
+                {% block UPLOAD_FORM_BUTTON_BAR_ADD_FILE_INPUT %}
+                {% comment %}
+                    UPLOAD_FORM_BUTTON_BAR_ADD_FILE_INPUT and FILE_INPUT
+                    control the same block. 
+
+                    FILE_INPUT is the original and shorter block name that has
+                    been kept to function as a convenient alias as well as to
+                    allow backward-compatibility with dependent projects. 
+                    
+                    Note: Only one should be overriden in the inheriting templates.
+                {% endcomment %}
                 {% block FILE_INPUT %}
                 {% comment %}
                     The file input for the upload form.
@@ -109,9 +124,15 @@ Bootstrap CSS Toolkit styles
                     {% endif %}
                 >
                 {% endblock %}
+                {% endblock %}
 
             </span>
+
+            {% block UPLOAD_FORM_BUTTON_BAR_ADD_EXTRA %}
             {% endblock %}
+
+            {% endblock %}
+
 
             {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
             <button type="submit" class="btn btn-primary start">
@@ -127,6 +148,9 @@ Bootstrap CSS Toolkit styles
                 <span>Delete</span>
             </button>
             <input type="checkbox" class="toggle">
+            {% endblock %}
+
+            {% block UPLOAD_FORM_BUTTON_BAR_EXTRA %}
             {% endblock %}
 
         </div>
@@ -173,6 +197,9 @@ Bootstrap CSS Toolkit styles
     <table role="presentation" class="table table-striped">
         <tbody class="files"></tbody>
     </table>
+    {% endblock %}
+
+    {% block UPLOAD_FORM_EXTRA %}
     {% endblock %}
 
 </form>
@@ -427,12 +454,23 @@ The File Upload validation plugin
 
         {% block JS_INIT %}
 
+        {% comment %}
+        In order to support both CSRF tokens and extra form inputs,
+        the upload form (assumed to have an id of "fileupload") is serialized
+        to produce an array. This array is then updated with the csrf_token.
+
+        The contents of the array are then sent as form data to the upload
+        handling Django view.
+        {% endcomment %}
+
+        var formData = $('#fileupload').serializeArray();
+        formData.push( 
+            { name: "csrfmiddlewaretoken", value: "{{ csrf_token }}" }
+        );
+
         $('#fileupload').fileupload({
 
-            formData: [
-                { name: "csrfmiddlewaretoken", value: "{{ csrf_token }}"}
-            ],
-
+            formData: formData,
 
             {% block JS_OPTS %}
             sequentialUploads: true
@@ -477,5 +515,9 @@ The File Upload validation plugin
 <script src="{{ STATIC_URL }}js/cors/jquery.xdr-transport.js"></script>
 <![endif]-->
 {% endblock %}
+
+{% block JS_EXTRA %}
+{% endblock %}
+
 
 {% endblock %}

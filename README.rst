@@ -151,8 +151,13 @@ HTML Components
   * UPLOAD_FORM_PROGRESS_BAR - The global progress information.
   * UPLOAD_FORM_BUTTON_BAR - The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload.
 
-    * UPLOAD_FORM_BUTTON_BAR_CONTROL 
-    * UPLOAD_FORM_BUTTON_BAR_ADD 
+    * UPLOAD_FORM_BUTTON_BAR_CONTROL - Contains buttons to start/cancel the upload or delete files. 
+    * UPLOAD_FORM_BUTTON_BAR_ADD     - Contains the file input used to add files.
+        * FILE_INPUT or UPLOAD_FORM_BUTTON_BAR_ADD_FILE_INPUT - Contains the file input.
+        * UPLOAD_FORM_BUTTON_BAR_ADD_EXTRA - An empty block allowing the addition of extra inputs.
+    * UPLOAD_FORM_BUTTON_BAR_EXTRA  - An empty block allowing the addition of extra components.
+
+  * UPLOAD_FORM_EXTRA - An empty block allowing the addition of extra components.
 
 CSS Components
 ==============
@@ -164,6 +169,7 @@ CSS Components
   * CSS_JQUERY_FILE_UPLOAD
   * CSS_JQUERY_FILE_UPLOAD_UI
   * CSS_HTML5_SHIM 
+  * CSS_EXTRA 
 
 JS Components
 =============
@@ -198,6 +204,7 @@ JS Components
   * JS_JQUERY_FILE_UPLOAD_VALIDATE
   * JS_JQUERY_FILEUPLOAD_UI 
   * JS_XDR_TRANSPORT 
+  * JS_EXTRA
 
 The included JavaScript and CSS can be updated or suppressed by overriding
 these blocks ::
