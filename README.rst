@@ -121,7 +121,6 @@ the purpose of customization:
 
 * JS_OPTS - The options supplied to the jQuery File Upload ``fileupload`` function. 
 * JS_INIT - The initializing JavaScript
-* JS_FORM - Loads existing files.
 * FILE_INPUT - The file input for the upload form.
 
 The blocks above are most-likely what you will want to override when seeking to
