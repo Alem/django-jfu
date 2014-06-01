@@ -294,7 +294,7 @@ Bootstrap CSS Toolkit styles
 
     <tr class="template-download fade">
 
-        {% block JS_DOWNLOAD_TEMPLATE_ERROR %}
+        {% block JS_DOWNLOAD_TEMPLATE_PREVIEW %}
         <td>
             <span class="preview">
                 {{ JQ_OPEN }} if (file.thumbnailUrl) { {{ JQ_CLOSE }}
@@ -322,9 +322,13 @@ Bootstrap CSS Toolkit styles
                     <span>{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</span>
                 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
             </p>
-            {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
-                <div><span class="label label-danger">Error</span> {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</div>
-            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+
+            {% block JS_DOWNLOAD_TEMPLATE_ERROR %}
+                {{ JQ_OPEN }} if (file.error) { {{ JQ_CLOSE }}
+                    <div><span class="label label-danger">Error</span> {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</div>
+                {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            {% endblock %}
+
         </td>
         {% endblock %}
 
