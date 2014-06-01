@@ -32,7 +32,7 @@ Bootstrap CSS Toolkit styles
  CSS to style the file input field as button and adjust the Bootstrap progress bars
 {% endcomment %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.fileupload-ui.css">
-{% comment %}
+{{% comment %}
  CSS adjustments for browsers with JavaScript disabled 
 {% endcomment %}
 <noscript>
@@ -230,14 +230,23 @@ Bootstrap CSS Toolkit styles
 {% block JS_UPLOAD_TEMPLATE %}
 <script id="template-upload" type="text/x-tmpl">
 {{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
+
     <tr class="template-upload fade">
+
+        {% block JS_UPLOAD_TEMPLATE_PREVIEW %}
         <td>
             <span class="preview"></span>
         </td>
+        {% endblock %}
+
+        {% block JS_UPLOAD_TEMPLATE_UPLOAD %}
         <td>
             <p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
             <strong class="error text-danger"></strong>
         </td>
+        {% endblock %}
+
+        {% block JS_UPLOAD_TEMPLATE_PROGRESSBAR %}
         <td>
             <p class="size">Processing...</p>
             <div class="progress progress-striped active" role="progressbar"
@@ -245,20 +254,30 @@ Bootstrap CSS Toolkit styles
                 <div class="progress-bar progress-bar-success" style="width:0%;"></div>
             </div>
         </td>
+        {% endblock %}
+
+        {% block JS_UPLOAD_TEMPLATE_CONTROLS %}
         <td>
+            {% block JS_UPLOAD_TEMPLATE_START %}
             {{ JQ_OPEN }} if (!i && !o.options.autoUpload) { {{ JQ_CLOSE }}
                 <button class="btn btn-primary start" disabled>
                     <i class="glyphicon glyphicon-upload"></i>
                     <span>Start</span>
                 </button>
             {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            {% endblock %}
+
+            {% block JS_UPLOAD_TEMPLATE_CANCEL %}
             {{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>Cancel</span>
                 </button>
             {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+            {% endblock %}
         </td>
+        {% endblock %}
+
     </tr>
 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
 </script>
@@ -272,7 +291,10 @@ Bootstrap CSS Toolkit styles
 
 <script id="template-download" type="text/x-tmpl">
 {{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
+
     <tr class="template-download fade">
+
+        {% block JS_DOWNLOAD_TEMPLATE_ERROR %}
         <td>
             <span class="preview">
                 {{ JQ_OPEN }} if (file.thumbnailUrl) { {{ JQ_CLOSE }}
@@ -284,6 +306,9 @@ Bootstrap CSS Toolkit styles
                 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
             </span>
         </td>
+        {% endblock %}
+
+        {% block JS_DOWNLOAD_TEMPLATE_DOWNLOAD %}
         <td>
             <p class="name">
                 {{ JQ_OPEN }} if (file.url) { {{ JQ_CLOSE }}
@@ -301,9 +326,15 @@ Bootstrap CSS Toolkit styles
                 <div><span class="label label-danger">Error</span> {{ JQ_OPEN }}=file.error{{ JQ_CLOSE }}</div>
             {{ JQ_OPEN }} } {{ JQ_CLOSE }}
         </td>
+        {% endblock %}
+
+        {% block JS_DOWNLOAD_TEMPLATE_FSIZE %}
         <td>
             <span class="size">{{ JQ_OPEN }}=o.formatFileSize(file.size){{ JQ_CLOSE }}</span>
         </td>
+        {% endblock %}
+
+        {% block JS_DOWNLOAD_TEMPLATE_DELETE %}
         <td>
             {{ JQ_OPEN }} if (file.deleteUrl) { {{ JQ_CLOSE }}
                 <button class="btn btn-danger delete" 
@@ -324,6 +355,7 @@ Bootstrap CSS Toolkit styles
                 </button>
             {{ JQ_OPEN }} } {{ JQ_CLOSE }}
         </td>
+        {% endblock %}
     </tr>
 {{ JQ_OPEN }} } {{ JQ_CLOSE }}
 </script>
