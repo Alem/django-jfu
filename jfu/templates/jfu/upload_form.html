@@ -6,7 +6,7 @@ Bootstrap CSS Toolkit styles
 {% endcomment %}
 <link 
     rel="stylesheet" 
-    href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    href="{{ STATIC_URL }}css/bootstrap.min.css"
 >
 {% endblock %}
 
@@ -372,7 +372,7 @@ Bootstrap CSS Toolkit styles
 {% comment %}
  jQuery 
 {% endcomment %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.min.js"></script>
 {% endblock %}
 
 {% block JS_JQUERY_UI_WIDGET %}
@@ -404,7 +404,7 @@ Bootstrap CSS Toolkit styles
 {% endblock %}
 
 {% block JS_BOOTSTRAP %}
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block JS_BLUEIMP_GALLERY %}
