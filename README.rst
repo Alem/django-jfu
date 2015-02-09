@@ -40,8 +40,9 @@ following within it::
     {% load jfutags %}
     {% jfu %}
 
-Then create a view that will handle the uploaded files. By default, the
-URL for the view must be named **'jfu_upload'**.
+Then create a view that will handle the uploaded files. 
+The URL for the view is expected to be named **'jfu_upload'** by default,
+although this can be customized (see Customization below).
 
 Here is an example implementation:
 
@@ -113,7 +114,7 @@ template to load and the name of the URL pointing to the upload-handling
 view.::
 
     {% load jfutags %}
-    {% jfu 'your_fileuploader.html' 'your_uploader' %}
+    {% jfu 'your_fileuploader.html' 'your_uploader_URL_name' %}
 
 A custom template can extend from the master Django-JFU template
 `jfu/upload_form.html`.  There are several blocks which may be overriden for
@@ -232,9 +233,12 @@ or by replacing the static files themselves.
 Demo
 ----
 If you have downloaded from the repository, a simple demo application has been
-included in the 'demo' directory. To test it out, run ::
+included in the 'demo' directory. 
+To test it out, enter the 'demo' directory and run ::
 
         ./setup && ./run
+
+Note that virtualenv is required for the demo to function.
 
 Contribution
 ------------           
