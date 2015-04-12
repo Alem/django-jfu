@@ -1,6 +1,6 @@
 virtualenv venv
 venv\scripts\activate
-pip install django==1.6
+pip install django
 pushd ..
 python setup.py install
 popd
