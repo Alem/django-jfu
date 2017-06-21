@@ -529,6 +529,7 @@
         _deleteHandler: function (e) {
             e.preventDefault();
             var button = $(e.currentTarget);
+            button.find('span').text('Deleting...')
             this._trigger('destroy', e, $.extend({
                 context: button.closest('.template-download'),
                 type: 'DELETE'
