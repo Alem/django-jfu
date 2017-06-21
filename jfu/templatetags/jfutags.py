@@ -1,5 +1,5 @@
-from django.core.context_processors import csrf
-from django.core.urlresolvers import reverse
+from django.template.context_processors import csrf
+from django.urls import reverse
 from django.template import Library, Context, loader
 
 register = Library()
@@ -36,4 +36,4 @@ def jfu(
 
     t = loader.get_template( template_name )
 
-    return t.render( Context( context ) )
+    return t.render( dict(pair for d in context for pair in d.items()) )
