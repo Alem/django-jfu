@@ -3,7 +3,7 @@ from os.path import dirname
 import jfu
 
 setup(
-    name    = 'django-%s' % jfu.__prog__,
+    name    = 'django-jpic-%s' % jfu.__prog__,
     version = jfu.__version__,
     author  = jfu.__author__,
     author_email = "alem@cidola.com",
