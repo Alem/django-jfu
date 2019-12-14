@@ -1,5 +1,5 @@
-from django.core.context_processors import csrf
-from django.core.urlresolvers import reverse
+from django.middleware import csrf
+from django.urls import reverse
 from django.template import Library, Context, loader
 
 register = Library()
